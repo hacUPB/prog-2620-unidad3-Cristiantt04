@@ -71,5 +71,21 @@ Es importante esos dos puntos al final de de la condición, ya que esto indica e
 ## Ejercicio 2 (Condicional simple)
 ![](../Imagenes/Imagen_10.png)
 
-Se realiza el codigo en la clase, se evidencian algunos ejemplos con valores como por ejemplo el de 100.000 en el cual el costo del envio se cobra de igual manera ya que la condicion para el envio gratis es de que sea mayor a 100.000$. 
+Se realiza el codigo en la clase, se evidencian algunos ejemplos con valores como por ejemplo el de 100.000 en el cual el costo del envio se cobra de igual manera ya que la condicion para el envio gratis es de que la compra sea mayor a 100.000$. 
+
+## Ejercicio 3 (Condicional doble)
+![](../Imagenes/Imagen_12.png)
+
+En este caso se utiliza un operador muy interesante y util, el operador residuo "%" el cual va en medio de dos numeros, en este caso de la variable "Número" y el numero 2. lo que quiere decir esta linea de codigo es que va a dividir la variable número entre el dos en este caso y la variable "residuo" va a conservar el valor del residuo de esa division, lo cual sirve para identificar si un número es par o impar. 
+
+## Ejercicio 4 (Condicional multiple)
+![](../Imagenes/Imagen_13.png)
+
+En este ejercicio se uso el condiconal elif, tambien se uso una nomenclatura interesante como lo fue la "f" dentro del print, para poder mezclar texto y variables en lo que se le mostrara al usuario. 
+
+## Ejercicio 6 
+![](../Imagenes/Imagen_14.png)
+
+En cuanto al codigo resaltar el uso de texto como condicion, vi un problema en el codigo y es que si el ususario ingresa un lugar erroneo el codigo le asignara un precio de 27. 
+
 

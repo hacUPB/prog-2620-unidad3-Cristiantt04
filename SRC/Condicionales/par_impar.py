@@ -1,6 +1,6 @@
 # Determinar si un número es par o impar 
 
-numero = int(input("Ingrese un número entero: "))
+numero = int(input("Ingrese un número: "))
 residuo = numero % 2
 if residuo == 0:
     print(f"{numero} es par")
