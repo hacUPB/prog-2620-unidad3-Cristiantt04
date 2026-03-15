@@ -15,4 +15,5 @@ def factorial(numero:int):
 
 
 resultado = factorial(-5)
-print(resultado)
+print(resultado) 
+

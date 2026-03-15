@@ -29,7 +29,7 @@ Los tanques de combustible están en la zona central del fuselaje y las alas. El
 
 en cuanto a células se refiere a compartimientos internos dentro de los tanques de conbustible del ala, diseñado para dividir el volumen total en secciones mas pequeñas y manejables para optimizar parametros como el centro de gravedad o incluso las operaciones de emergencia. 
 
-**Un peque;o esquema sobre el sistema de combustible** 
+**Un pequeño esquema sobre el sistema de combustible** 
 ![](../Imagenes/Imagen_15.png)
 
 **¿Cuánto combustible suele llevar en operaciones reales?**
@@ -90,17 +90,19 @@ Porcentaje de ajuste = -12%
 |---|---|
 |combustible_inicial|Cantiddad de combustible con la que despegara el avion en kg|
 |numero_tramos|Cantidad de tramos que tendra la ruta de vuelo|
-|distancia_tramos|Distancia del tramo que el avion debe recorrer en km|
+|distancia_tramos|Distancia de cada tramo que el avion debe recorrer en km|
 |tipo_viento|Condición del viento durante el tramo|
+|destino_final|Lugar de detino donde aterrizara el avion|
 
 
 ### Tabla de datos de salida
 |Datos|Descripción|
 |---|---|
-|consumo_tramo|Combustible consumido durante ese tramo|
-|combustible_restante|Combustible que queda despues del tramo|
+|consumo|Combustible consumido durante ese tramo|
+|combustible_restante|Combustible que queda despues del tramo kg|
 |alerta_reserva|Mensaje de alerta si el combustible llega al limite de seguridad|
 |estado_vuelo|Indica si el vuelo continúa o si debe abortar|
+|destino_final|Lugar de destino donde aterrizara el avion|
 
 ### Tabla de constantes
 |Datos|Descripccion|
@@ -108,35 +110,111 @@ Porcentaje de ajuste = -12%
 |consumo_base|Consumo estandar del avion (A320neo) en kg/km|
 |factor_headwind|Incremento del consumo por viento en contra|
 |factor_tailwind|Reducción de consumo por viento a favor|
-|reserva_legal|Cantidad miníma de combustible que no debe gastarse|
+|reserva_legal|Cantidad miníma de combustible que no debe gastarse en kg|
 
 ### Tabla de variables
 |Datos|
 |---|
 |tipo_viento|
-|consumo_tramos|
+|consumo|
 |estado_vuelo|
 |numero_tramos|
-|combustible_inicial|
+|combustible_restante|
+|destino_final|
 
 
-#### Pseudocodigo
 
-Inicio
-
-leer consumo_base
-
-leer factor_headwind
-
-leer factor_tailwind
-
-leer reserva_legal
-
-Leer combustible_inicial
-
-        funcion calcular_consumo_tramo(distancia, viento)
-
-        si 
+## Pseudocodigo
 
         
+                funcion calcular_consumo_tramo(distancia, viento)
+
+                si viento es "headwind"
+                        factor = factor_headwind
+                sino si viento es "tailwind"
+                        factor = factor_tailwind
+                sino
+                        factor = factor_neutro
+        
+        Inicio
+
+                consumo_base = 3 kg/km
+                factor_headwind = 1.18
+                factor_tailwind = 0.88
+                factor_neutro = 1
+                reserva_legal = 1200 kg
+
+
+        ingresar combustible_inicial
+        ingresar numero_tramos
+        ingresa  destino_final 
+        combustible_actual = combustible_inicial
+
+
+        para tramo desde 1 hasta numero_tramos
+
+                mostrar: "Tramo {tramo}"
+                ingresar distancia_tramos
+                ingresar tipo_viento
+
+                consumo = calcular_consumo_tramo(distancia_tramos, tipo_viento)
+                combustible_actual = combustible_actual - consumo
+
+                mostrar: "El consumo es: {consumo}"
+                mostrar: "El combustible restante es: {combustible_actual}"
+
+                si combustible_actual <= reserva_legal
+                        Mostrar: "ALERTA combustible en reserva"
+                        Mostrar: "Andate al aeropuesto más cercano"
+                        break
+                sino 
+                        mostrar: "Vuelos completado con exito"
+                fin si
+        fin ciclo for
+
+        si combustigle_actual >= reserva_legal
+                mostrar "Haz llegado a {destino_final} sin utilizar el combustible de reserva, buen trabajo"
+        fin si
+
+        fin
+
+## Resultados finales
+
+Se llevaron a cabo dos simulaciones, una en la cual el avion llegaria al aeropuerto con combustible suficiente y en otra donde debido a falta de combustible tendra que dirigirse al aeropuerto más cercano.
+
+### Caso 1 
+Destino: España
+
+|Combustible|Tramo|Distancia|viento|Consumo|Combustible restante|
+|---|---|---|---|---|---|
+|30000|1|1200|headwind|4248|25752|
+|25752|2|2000|neutro|6000|19752|
+|19752|3|1800|tailwind|4752|15000|
+|15000|4|1800|neutro|5400|9600|
+|9600|5|1200|tailwind|3600|6000|
+
+*Completado con exito*
+
+**Resultado:**
+
+![](../Imagenes/Imagen_16.png)
+
+### Caso 2
+Destino: Casablanca(Marruecos)
+
+|Combustible|Tramo|Distancia|Viento|Consumo|Combustible restante|
+|---|---|---|---|---|---|
+|20000|1|1400|headwind|4956|15044|
+|15044|2|1600|headwind|5664|9380|
+|9380|3|1500|headwind|5310|4070|
+|4070|4|2000|headwind|7080|**-3010**|
+|---|---|---|---|---|---|
+
+*A lo largo del tramo 4 es necesario abortar el vuelo por falta de combustible*
+
+*Resultado:*
+![](../Imagenes/Imagen_17.png)
+
+
+
 
